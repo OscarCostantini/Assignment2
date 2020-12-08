@@ -21,7 +21,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build> // questo lo metti quando fai il checkstile, dopo il comando mvn install, prima del comando mvn package
+  <build> 
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
