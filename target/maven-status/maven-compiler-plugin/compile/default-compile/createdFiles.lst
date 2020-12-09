@@ -1,4 +1,5 @@
 it\unipd\tos\business\TakeAwayBill.class
+it\unipd\tos\business\TotalCalculator.class
 it\unipd\tos\model\MenuItem$type.class
 it\unipd\tos\model\User.class
 it\unipd\tos\model\MenuItem.class
