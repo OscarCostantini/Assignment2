@@ -42,6 +42,9 @@ public class TotalCalculator implements TakeAwayBill {
             if (TotGel > 50) {
                 totale -= totale * 0.1;
                 }
+            if (totale<10) {
+                totale+=0.50;
+                }
         return totale;     
     }
 }

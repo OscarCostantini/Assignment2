@@ -67,4 +67,10 @@ public class TotalCalculatorTest {
 		}
 		totale = calcola.getOrderPrice(list,user);
 	}	
+	@Test
+	public void plus050Test() throws TakeAwayBillException {
+		list.add(new MenuItem(MenuItem.type.Budino,"Pinguino",3.00));
+		totale = calcola.getOrderPrice(list, user);
+		assertEquals(3.50,totale,Diff);
+	}
 }
