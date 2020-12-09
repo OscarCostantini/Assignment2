@@ -28,11 +28,11 @@ public class TotalCalculatorTest {
 		user = new User("Oscar","Costantini",24);
 	}
 
-		@Test(expected = TakeAwayBillException.class) 
-	    public void listNulltTest() throws TakeAwayBillException {
-	        list = null;
-	        totale = calcola.getOrderPrice(list,user);
-	    }
+	@Test(expected = TakeAwayBillException.class) 
+	   public void nullInListTest() throws TakeAwayBillException {
+		  list.add(null);
+		  totale = calcola.getOrderPrice(list,user);
+	}
 
 	@Test
 	public void sumTest() throws TakeAwayBillException {
@@ -46,10 +46,25 @@ public class TotalCalculatorTest {
 
         assertEquals(18.50,totale,Diff);
     }
-
-	@Test(expected = TakeAwayBillException.class) 
-		public void nullInListTest() throws TakeAwayBillException {
-			list.add(null);
-		    totale = calcola.getOrderPrice(list,user);
-		    }
+	@Test
+	public void discount50Test() throws TakeAwayBillException {
+		list.add(new MenuItem(MenuItem.type.Gelato,"Pinguino",6.50));
+		list.add(new MenuItem(MenuItem.type.Gelato,"BananaSplit",6.50));
+		list.add(new MenuItem(MenuItem.type.Gelato,"Biancaneve",6.50));
+		list.add(new MenuItem(MenuItem.type.Gelato,"Cioccolato",5.00));
+		list.add(new MenuItem(MenuItem.type.Gelato,"Banana",3.00));
+		list.add(new MenuItem(MenuItem.type.Gelato,"FiorDiLatte",5.00));
+		list.add(new MenuItem(MenuItem.type.Gelato,"Fragola",5.00));
+		totale = calcola.getOrderPrice(list, user);
+		assertEquals(36.00,totale,Diff);
+	}
+	@Test
+	public void discount10Test() throws TakeAwayBillException {
+		list.add(new MenuItem(MenuItem.type.Budino,"Cameo",30.00));
+		list.add(new MenuItem(MenuItem.type.Budino,"Biancaneve",30.00));
+		list.add(new MenuItem(MenuItem.type.Gelato,"Fragola",35.00));
+		list.add(new MenuItem(MenuItem.type.Bevanda,"Pepsi",5.00));
+		totale = calcola.getOrderPrice(list, user);
+		assertEquals(90.00,totale,Diff);
+	}
 }
