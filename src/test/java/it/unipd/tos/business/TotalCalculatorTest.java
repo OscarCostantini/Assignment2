@@ -37,19 +37,19 @@ public class TotalCalculatorTest {
 	@Test
 	public void sumTest() throws TakeAwayBillException {
 
-		list.add(new MenuItem(MenuItem.type.Bevanda, "CocaCola", 3.5));
-        list.add(new MenuItem(MenuItem.type.Budino, "Pinguino", 2));
-        list.add(new MenuItem(MenuItem.type.Gelato, "Biancaneve", 7.00));
-        list.add(new MenuItem(MenuItem.type.Gelato, "CoppaNafta", 6.00));
+		list.add(new MenuItem(MenuItem.type.Gelato, "CoppaNafta", 5.00));
+	    list.add(new MenuItem(MenuItem.type.Gelato, "Biancaneve", 7.50));
+	    list.add(new MenuItem(MenuItem.type.Bevanda, "CocaCola", 3));
+	    list.add(new MenuItem(MenuItem.type.Budino, "Pinguino", 3));
 
         totale = calcola.getOrderPrice(list,user);
 
         assertEquals(18.50,totale,Diff);
     }
 
-			@Test(expected = TakeAwayBillException.class) 
-		    public void nullInListTest() throws TakeAwayBillException {
-				list.add(null);
-		        totale = calcola.getOrderPrice(list,user);
+	@Test(expected = TakeAwayBillException.class) 
+		public void nullInListTest() throws TakeAwayBillException {
+			list.add(null);
+		    totale = calcola.getOrderPrice(list,user);
 		    }
 }
