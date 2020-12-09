@@ -13,13 +13,11 @@ import it.unipd.tos.model.User;
 import it.unipd.tos.business.exception.TakeAwayBillException;
 
 public class TotalCalculatorTest {
-
 	TotalCalculator calcola;
 	User user;
 	double totale;
 	List<MenuItem> list;
 	private static final double Diff = 1e-3;
-
 	@Before
 	public void setup() {
 		calcola = new TotalCalculator();
@@ -27,23 +25,18 @@ public class TotalCalculatorTest {
 		list = new ArrayList<MenuItem>();
 		user = new User("Oscar","Costantini",24);
 	}
-
 	@Test(expected = TakeAwayBillException.class) 
 	   public void nullInListTest() throws TakeAwayBillException {
 		  list.add(null);
 		  totale = calcola.getOrderPrice(list,user);
 	}
-
 	@Test
 	public void sumTest() throws TakeAwayBillException {
-
 		list.add(new MenuItem(MenuItem.type.Gelato, "CoppaNafta", 5.00));
 	    list.add(new MenuItem(MenuItem.type.Gelato, "Biancaneve", 7.50));
 	    list.add(new MenuItem(MenuItem.type.Bevanda, "CocaCola", 3));
 	    list.add(new MenuItem(MenuItem.type.Budino, "Pinguino", 3));
-
         totale = calcola.getOrderPrice(list,user);
-
         assertEquals(18.50,totale,Diff);
     }
 	@Test
@@ -67,4 +60,11 @@ public class TotalCalculatorTest {
 		totale = calcola.getOrderPrice(list, user);
 		assertEquals(90.00,totale,Diff);
 	}
+	@Test(expected = TakeAwayBillException.class) 
+	public void massimo30Test() throws TakeAwayBillException {
+		for(int i=0; i<32; i++) {
+			list.add(new MenuItem(MenuItem.type.Gelato,"Cioccolato",8.00));
+		}
+		totale = calcola.getOrderPrice(list,user);
+	}	
 }

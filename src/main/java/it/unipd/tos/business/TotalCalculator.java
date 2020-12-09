@@ -14,28 +14,27 @@ public class TotalCalculator implements TakeAwayBill {
         int numGel=0;
         MenuItem GelMenoCost=null;
         double TotGel = 0;
-
         if (items == null) {
             throw new TakeAwayBillException("Lista vuota");
         }
-
         if (items.contains(null)) {
             throw new TakeAwayBillException("nessun elemento nella lista");
+        }      
+        if (items.size() > 30) {
+            throw new TakeAwayBillException("30 elementi");
         }
         for(MenuItem i: items) {
             totale +=i.getPrezzo();
             if (i.getItemTipo() == MenuItem.type.Gelato) {
                 numGel++;
                 TotGel += i.getPrezzo();
-
                 if ((GelMenoCost == null) || (GelMenoCost.getPrezzo() > i.getPrezzo())) {
                     GelMenoCost = i;
                 }
             }
             if (i.getItemTipo() == MenuItem.type.Budino) {
                 TotGel += i.getPrezzo();
-                }
-            
+                }            
             } 
             if (numGel > 5) {
                 totale -= GelMenoCost.getPrezzo() * 0.5;
