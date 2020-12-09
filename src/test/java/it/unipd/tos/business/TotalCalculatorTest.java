@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalTime;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import it.unipd.tos.model.MenuItem;
 import it.unipd.tos.model.User;
 import it.unipd.tos.business.exception.TakeAwayBillException;
+import it.unipd.tos.business.TotalBill;
 
 public class TotalCalculatorTest {
 	TotalCalculator calcola;
@@ -72,5 +74,24 @@ public class TotalCalculatorTest {
 		list.add(new MenuItem(MenuItem.type.Budino,"Pinguino",3.00));
 		totale = calcola.getOrderPrice(list, user);
 		assertEquals(3.50,totale,Diff);
+	}
+	@Test
+	public void freeBillsTest() throws TakeAwayBillException {
+		User user = null;
+		List<TotalBill> orders = new ArrayList<TotalBill>();
+		list.add(new MenuItem(MenuItem.type.Gelato,"Cioccolato",4.00));
+		for(int i=0; i<18; i++) {
+			user = new User("Simone","DalMedico",i);
+			orders.add(new TotalBill(list,user,LocalTime.of(18, 07, 33),calcola.getOrderPrice(list, user)));
+		}
+		List<TotalBill> free = calcola.FreeOrders(orders);
+		boolean b = false;
+		if(free.size()<=10) {
+			b = true;
+		}	
+		assertEquals(true,b);
+		for(TotalBill i: free) {
+			assertEquals(0.00,i.getPrice(),Diff);
+		}
 	}
 }

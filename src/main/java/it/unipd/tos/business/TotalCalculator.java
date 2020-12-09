@@ -4,8 +4,11 @@
 package it.unipd.tos.business;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
 import it.unipd.tos.model.MenuItem;
 import it.unipd.tos.model.User;
+import it.unipd.tos.business.TotalBill;
 import it.unipd.tos.business.exception.TakeAwayBillException;
 
 public class TotalCalculator implements TakeAwayBill {
@@ -46,5 +49,22 @@ public class TotalCalculator implements TakeAwayBill {
                 totale+=0.50;
                 }
         return totale;     
+    }
+    public List < TotalBill > FreeOrders(List < TotalBill > bills) {
+
+        List < TotalBill > noPay = new ArrayList < TotalBill > ();
+
+        for (TotalBill i: bills) {
+            if (i.getUser().getEta() < 18 && (!noPay.contains(i)) && noPay.size() < 10 && i.getTempo() >= 64800 && i.getTempo() <= 68400) {
+                Random rand = new Random();
+                if (rand.nextBoolean()) {
+                    noPay.add(i);
+                }
+            }
+        }
+        for (TotalBill i: noPay) {
+            i.changePrice(0.00);
+        }
+        return noPay;
     }
 }
